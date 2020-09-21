@@ -59,7 +59,7 @@ function App() {
       <div
         className={`grid grid-rows-${filteredData.length || 1} lg:grid-cols-${
           filteredData.length || 1
-        } lg:grid-rows-none pt-20`}>
+        } lg:grid-rows-none pt-32 lg:pt-20`}>
         {filteredData.map((list) => (
           <List key={list.id} list={list} />
         ))}
