@@ -1,68 +1,40 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Theran Brigowatz Fetch Project
 
-## Available Scripts
+## About Project
 
-In the project directory, you can run:
+This project was built using Create React App and Tailwind.css. I normally would build out a site with Next.js or Gatsby, but for such a simple app, I just used the standard Create React App to get up and running quickly. I used Tailwind as it provides a great framework for styling and is quick to setup.
 
-### `yarn start`
+Other than that it is all regular React and JavaScript. I just used the standard Fetch API, rather than a library like Axios as there was nothing too complex in this case. State was just handled by `useState`, though for more complex projects I would reach for something like Redux or the Context API.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Notes
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+- **_CORS_** - The settings for the API path that was sent was blocked by CORS on `localhost`. Since I did not have access to change the server cors permissions I recreated the JSON file as a `localhost` API route. This should simulate making the Fetch API call like in the directions, rather than doing a direct import.
+- **_Filtering and Sorting_** - This was not an issue, as much as an architecture decision. In order to sort and filter the data, the `getListData` function grew quickly. Originally I had two states, one for the list ids and one for the filtered items. Then in the render I was filtering out by id.
 
-### `yarn test`
+  However, I decided to refactor, so all filtering and sorting methods finish before the render, as not end up with render errors from unpopulated data. This is a bit more complex with multiple chained array methods to sort and filter items, but I think that if the data model were to scale, this would be more efficient and grow with a more dynamic data model.
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+  This is also where I ran into an issue of sorting. The directions said to sort by name. I originally did have this by the string, but then they are out of numerical order if you sort by string. You can use this to just sort alphabetically by name:
 
-### `yarn build`
+  ```js
+  list.sort((a, b) => a.name(localeCompare(b.name)));
+  ```
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+  But I ran into the issue that even though they are in string order, the numbers are out of order. To make more sense to the user, I decided to go with a clear numeric order. If the numbers in the items did not match their id, I would have probably gone with:
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+  ```js
+  list.sort((a, b) => ParseInt(a.slice(4)) - ParseInt(b.slice(4)));
+  ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+  This would have ensured they were in alphabetical order by name. However, I did just use ids as the id and the name contained the same number. This is a liberty I took, since the directions were unclear if they should be sorted by the full name order, or the numeric order contained in the name.
 
-### `yarn eject`
+- **_Styling and Accessibility_** - Using Tailwind.CSS I tried to dynamically render the color palette. This does work, but from an a11y point of view, I would adjust it to have a larger custom color pallette to work with, or custom colors that fit better. The default pattern does not have a wide enough range for this time of dynamic CSS and this many items. This is especially true on List 2 and list 3. There should be greater contrast between background and font colors on the items to make it more readable.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+  The site is fully mobile responsive and goes to a column view for lists on mobile and tablet views. It used grid for the overall layout, with flex box in the list. I realize that this isn't a world changing design, as I am not a designer, but it works ok in this case.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- **_State Management_** - No external libraries were used for state, as there really is only the one data set that is in state. There are simple loading and error states to make the UX a bit more smooth, but the displays are very basic.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Installation
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Install with `npm install` or `yarn install`.
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+After installation you may use `npm start` or `yarn start`. The site will run on `http://localhost:3000`.
