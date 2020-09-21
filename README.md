@@ -31,6 +31,8 @@ Other than that it is all regular React and JavaScript. I just used the standard
 
   The site is fully mobile responsive and goes to a column view for lists on mobile and tablet views. It used grid for the overall layout, with flex box in the list. I realize that this isn't a world changing design, as I am not a designer, but it works ok in this case.
 
+  The full Tailwind CSS file is in the project.  For production I would purge and compress unused CSS styles.
+
 - **_State Management_** - No external libraries were used for state, as there really is only the one data set that is in state. There are simple loading and error states to make the UX a bit more smooth, but the displays are very basic.
 
 ### Installation
