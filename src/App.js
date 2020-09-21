@@ -2,8 +2,9 @@ import './styles/tailwind.css';
 
 import React, { useEffect, useState } from 'react';
 
+import Error from './components/Error';
 import List from './components/List';
-import { Loader } from './components/Loader';
+import Loader from './components/Loader';
 
 function App() {
   const [filteredData, setFilteredData] = useState([]);
@@ -48,18 +49,21 @@ function App() {
 
   if (loading) return <Loader />;
 
-  if (error)
-    return (
-      <div className='min-h-screen flex flex-col justify-center items-center'>
-        <p className='font-fancy text-2xl'>{error}</p>
-      </div>
-    );
+  if (error) return <Error error={error} />;
 
   return (
-    <div className='grid grid-rows-4 lg:grid-cols-4 lg:grid-rows-none'>
-      {filteredData.map((list) => (
-        <List key={list.id} list={list} />
-      ))}
+    <div>
+      <h1 className='font-fancy text-4xl bg-gray-400 text-blue-800 text-center py-4 fixed top-0 w-full'>
+        Theran Brigowatz Fetch Project
+      </h1>
+      <div
+        className={`grid grid-rows-${filteredData.length || 1} lg:grid-cols-${
+          filteredData.length || 1
+        } lg:grid-rows-none pt-20`}>
+        {filteredData.map((list) => (
+          <List key={list.id} list={list} />
+        ))}
+      </div>
     </div>
   );
 }
