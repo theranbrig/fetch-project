@@ -8,7 +8,7 @@ Other than that it is all regular React and JavaScript. I just used the standard
 
 ### Notes
 
-- **_CORS_** - The settings for the API path that was sent was blocked by CORS on `localhost`. Since I did not have access to change the server cors permissions I recreated the JSON file as a `localhost` API route. This should simulate making the Fetch API call like in the directions, rather than doing a direct import.
+- **_CORS_** - The settings for the API path that was sent was blocked by CORS on `localhost`. Since I did not have access to change the server allowed domains permissions, I recreated the JSON file as a `localhost` API route.  It is found at `example_hiring.json`. This simulates making the Fetch API call like in the directions, rather than doing a direct import.
 - **_Filtering and Sorting_** - This was not an issue, as much as an architecture decision. In order to sort and filter the data, the `getListData` function grew quickly. Originally I had two states, one for the list ids and one for the filtered items. Then in the render I was filtering out by id.
 
   However, I decided to refactor, so all filtering and sorting methods finish before the render, as not end up with render errors from unpopulated data. This is a bit more complex with multiple chained array methods to sort and filter items, but I think that if the data model were to scale, this would be more efficient and grow with a more dynamic data model.
